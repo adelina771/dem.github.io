@@ -1,8 +1,60 @@
-body{
-	background-color: #d2b48c;
-	margin-left: 20%;
-	margin-right: 20%;
-	border: 2px dotted black;
-	padding: 10px 10px 10px 10px;
-	font-family: sans serif;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Красивая страница с датой</title>
+  <style>
+    body {
+      background-color: #d2b48c; /* Цвет "бежевый" (tan) */
+      margin-left: 20%;
+      margin-right: 20%;
+      border: 2px dotted black;
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
     }
+
+    h1 {
+      text-align: center;
+      color: #5a4a42;
+      margin-bottom: 20px;
+    }
+
+    .date {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #2c1e17;
+      text-align: center;
+      margin: 15px 0;
+      padding: 8px;
+      background-color: #f5e9d9;
+      border-radius: 6px;
+      display: inline-block;
+      width: 100%;
+    }
+
+    p {
+      text-align: justify;
+      margin-bottom: 15px;
+    }
+
+    /* Адаптивность на мобильных */
+    @media (max-width: 768px) {
+      body {
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Добро пожаловать на мою страницу!</h1>
+  
+  <div class="date" id="current-date"></div>
+
+  <p>
+    Это пример красиво оформленной веб-страницы. Фон имеет приятный бежевый оттенок, 
+    текст легко

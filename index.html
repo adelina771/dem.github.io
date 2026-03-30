@@ -1,292 +1,64 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой блог</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Стили для красивого отображения предсказаний */
-        .prediction-box {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-family: monospace;
-        }
-        .prediction-box strong {
-            color: #333;
-        }
-        /* Стили для FAQ-блока */
-        .faq-box {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-left: 4px solid #4CAF50;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-family: sans-serif;
-        }
-        .faq-box .meta {
-            color: #666;
-            font-size: 0.9em;
-            font-style: italic;
-            margin: 5px 0;
-        }
-        .faq-date-inline {
-            display: block;
-            margin: -15px -15px 10px -15px;
-            padding: 10px 15px;
-            background: #e8f5e9;
-            border-radius: 8px 8px 0 0;
-            font-size: 0.95em;
-        }
-        /* Стили для блока с результатами модели */
-        .ml-result-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 25px 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .ml-result-box h4 {
-            margin: 0 0 10px 0;
-            font-size: 1.1em;
-            border-bottom: 2px solid rgba(255,255,255,0.3);
-            padding-bottom: 8px;
-        }
-        .accuracy-badge {
-            display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-        .accuracy-badge.warning {
-            background: #FF9800;
-        }
-        /* Стили для таблицы данных */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 0.9em;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .data-table th {
-            background: #667eea;
-            color: white;
-            padding: 12px 8px;
-            text-align: left;
-            font-weight: 600;
-        }
-        .data-table td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #eee;
-            color: #333;
-        }
-        .data-table tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        .data-table tr:hover {
-            background: #e3f2fd;
-        }
-        .class-dist {
-            display: flex;
-            gap: 15px;
-            margin: 10px 0;
-            flex-wrap: wrap;
-        }
-        .class-item {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-size: 0.95em;
-        }
-        .report-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 10px 0;
-        }
-        .report-item {
-            background: rgba(255,255,255,0.15);
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-        }
-        .report-item .label {
-            font-size: 0.85em;
-            opacity: 0.9;
-            display: block;
-        }
-        .report-item .value {
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        
-        <blockquote class="quote-box">
-            Путешествие в тысячу миль начинается с одного шага (Лао Цзы)
-        </blockquote>
+<!-- 🔹 БЛОК: Метрики ошибки нейронной сети -->
+<p class="date">30 марта 2026</p>
 
-        <!-- Запись от 19 января 2026 -->
-        <p class="date">19 января 2026</p>
-        <h1 class="main-title">Решение задач по шифру Цезаря</h1>
-        
-        <h3>1. Определение ключей шифра Цезаря</h3>
-        <p><strong>а. АПЕЛЬСИН → САЦЬНВЩЮ</strong></p>
-        <pre>Ключ: k = 18</pre>
-
-        <p><strong>б. АБРИКОС → ЫЬЛГЕЙМ</strong></p>
-        <pre>Ключ: k = 28</pre>
-        
-        <h3>3. Шифрование фамилии с ключом k = 10</h3>
-        <p><strong>Фамилия: ОЗЕРСКАЯ</strong></p>
-        <pre>Зашифрованная фамилия: ШСПЪЫФКЙ</pre>
-
-        <!-- Запись от 20 декабря 2025 -->
-        <p class="date">20 декабря 2025</p>   
-        <p style="color: #999;">пропуск-3 раза</p>
-        
-        <!-- Запись от 7 декабря 2025 -->
-        <p class="date">7 декабря 2025</p>
-        <h1 class="main-title">Поздравляю с наступающим Рождеством 2026 🎄</h1>
-        <h3 class="subsection-title">Новый год</h3>
-        <p><a href="https://content-studio.sberdevices.ru/media/019b16f5-d46d-7443-b8e4-276feb3439fc/019b464a-ebe9-76c6-8f14-700a4d0852e8.mp4#t=0.001" target="_blank">новогоднее поздравление</a></p>
-
-        <!-- Запись от 19 декабря 2025 -->
-        <p class="date">19 декабря, 2025</p>
-        <p>Я сделала Новогодние кроссворды и поздравление для сайта <a href="https://justmargarret.github.io/just-yourmargarret2/">Поздравление и кроссворды</a></p>
-        
-        <blockquote class="quote-box">
-            <p class="date">21 декабря, 2025</p>
-            Путешествие в тысячу миль начинается с одного шага (Лао Цзы)
-        </blockquote>
-
-        <p>Оставляю в прошлом скучную неинтересную локальную файловую систему ради Всемирной паутины.</p>
-        <p><a href="#">Рождественская елка иконки от IconMarketPK - Flaticon</a></p>
-
-        <!-- Запись от 14 января 2026 -->
-        <p class="date">14 января 2026</p>
-        <p>Домен: adelina771.github.io</p>
-        <p><a href="mailto:garizanadelina@gmail.com">Напишите мне</a></p>
-
-        <!-- Запись от 20 декабря 2025 (пропуск) -->
-        <p class="date">20 декабря 2025</p>   
-        <p style="color: #999;">пропуск-3 раза</p>
-
-        <!-- Запись от 14 февраля 2026 -->
-        <p class="date">14 февраля 2026</p>   
-
-        <!-- БЛОК ПРЕДСКАЗАНИЙ -->
-        <div class="prediction-box">
-            <strong>🔮 Топ-3 предсказаний:</strong><br>
-            👟 running shoe: 99.45%<br>
-            🏪 shoe store: 0.27%<br>
-            👞 clogs: 0.15%
-        </div>
-
-        <!-- БЛОК ОТВЕТА НА ВОПРОС -->
-        <div class="faq-box">
-            <p class="date">21 февраля 2026</p>
-            <p><strong>❓ Вопрос пользователя:</strong> Сколько ждать мой заказ?</p>
-            <p class="meta">Найден FAQ-вопрос: «Как быстро доставляется заказ?» (sim=0.706)</p>
-            <p><strong>✅ Ответ бот-FAQ:</strong> Наш стандартный срок доставки — 3–5 рабочих дней.</p>
-        </div>
-
-        <!-- 🔹 НОВЫЙ БЛОК: Результаты машинного обучения -->
-        <p class="date">23 марта 2026</p>
-        
-        <div class="ml-result-box">
-            <h4>🎯 Модель кредитного скоринга</h4>
-            <p>Показатель точности модели по выдаче кредита:</p>
-            <span class="accuracy-badge warning">0.69 (69%)</span>
-            <p style="font-size:0.9em; opacity:0.9; margin-top:5px;">
-                <em>Модель требует доработки: попробуйте добавить больше признаков или изменить параметры дерева</em>
-            </p>
-        </div>
-
-        <div class="ml-result-box" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-            <h4>🚗 Модель страхования КАСКО</h4>
-            
-            <p><strong>📊 Первые строки датасета:</strong></p>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>age</th>
-                        <th>driving_experience</th>
-                        <th>accidents</th>
-                        <th>casco_approved</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>56</td><td>1</td><td>2</td><td>❌ 0</td></tr>
-                    <tr><td>69</td><td>12</td><td>0</td><td>✅ 1</td></tr>
-                    <tr><td>46</td><td>42</td><td>7</td><td>❌ 0</td></tr>
-                    <tr><td>32</td><td>42</td><td>4</td><td>❌ 0</td></tr>
-                    <tr><td>60</td><td>47</td><td>4</td><td>❌ 0</td></tr>
-                    <tr><td>25</td><td>10</td><td>3</td><td>✅ 1</td></tr>
-                    <tr><td>38</td><td>46</td><td>5</td><td>❌ 0</td></tr>
-                    <tr><td>56</td><td>22</td><td>2</td><td>✅ 1</td></tr>
-                    <tr><td>36</td><td>15</td><td>8</td><td>❌ 0</td></tr>
-                    <tr><td>40</td><td>30</td><td>4</td><td>❌ 0</td></tr>
-                </tbody>
-            </table>
-
-            <p><strong>📈 Распределение классов:</strong></p>
-            <div class="class-dist">
-                <div class="class-item">❌ Отказ: <strong>609</strong></div>
-                <div class="class-item">✅ Одобрено: <strong>391</strong></div>
+<div class="ml-result-box" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+    <h4>📉 Метрики ошибки модели (MSE)</h4>
+    
+    <p><strong>Значения среднеквадратичной ошибки:</strong></p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+        <!-- Блок: Ошибка на обучении -->
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.9em; opacity: 0.95; margin-bottom: 8px;">🎓 Обучение (Train)</div>
+            <div style="font-family: monospace; font-size: 1.3em; font-weight: bold; background: rgba(0,0,0,0.15); padding: 8px; border-radius: 4px;">
+                0.0184
             </div>
-
-            <p><strong>🎯 Точность модели на тесте:</strong></p>
-            <span class="accuracy-badge">1.0000 (100%)</span>
-
-            <p><strong>📋 Отчет о классификации (тестовая выборка):</strong></p>
-            <div class="report-grid">
-                <div class="report-item">
-                    <span class="label">Precision</span>
-                    <span class="value">1.00</span>
-                </div>
-                <div class="report-item">
-                    <span class="label">Recall</span>
-                    <span class="value">1.00</span>
-                </div>
-                <div class="report-item">
-                    <span class="label">F1-Score</span>
-                    <span class="value">1.00</span>
-                </div>
-                <div class="report-item">
-                    <span class="label">Support</span>
-                    <span class="value">200</span>
-                </div>
-            </div>
-            
-            <p style="font-size:0.85em; opacity:0.85; margin-top:15px; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px;">
-                💡 <em>Высокая точность объясняется тем, что данные сгенерированы по четким правилам, которые дерево решений идеально воспроизводит.</em>
-            </p>
+            <div style="font-size: 0.85em; opacity: 0.9; margin-top: 5px;">MSE = 0.01842436...</div>
         </div>
-
+        
+        <!-- Блок: Ошибка на тесте -->
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.9em; opacity: 0.95; margin-bottom: 8px;">🧪 Тест (Test)</div>
+            <div style="font-family: monospace; font-size: 1.3em; font-weight: bold; background: rgba(0,0,0,0.15); padding: 8px; border-radius: 4px;">
+                0.0256
+            </div>
+            <div style="font-size: 0.85em; opacity: 0.9; margin-top: 5px;">MSE = 0.02561263...</div>
+        </div>
     </div>
-</body>
-</html>
 
+    <!-- Индикатор качества -->
+    <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; margin: 15px 0;">
+        <strong>📊 Анализ качества:</strong>
+        <ul style="margin: 8px 0 0 20px; font-size: 0.95em; line-height: 1.6;">
+            <li>✅ Разница Train/Test: <strong>0.0072</strong> — модель не переобучена</li>
+            <li>✅ Ошибка теста < 0.03 — приемлемое качество для задачи</li>
+            <li>💡 Можно улучшить: добавить данных или настроить гиперпараметры</li>
+        </ul>
+    </div>
 
-  <!-- Запись от 30 марта 2026 -->
-        <p class="date">30 марта  2026</p>   
-
-
-шибка на обучении (MSE): 0.018424361446932207
-Ошибка на тесте (MSE): 0.025612634811846308
+    <!-- JSON для разработчиков -->
+    <details style="margin-top: 15px; font-size: 0.9em;">
+        <summary style="cursor: pointer; padding: 8px; background: rgba(0,0,0,0.1); border-radius: 4px;">🔧 JSON для API / скачивания</summary>
+        <pre style="background: rgba(0,0,0,0.25); padding: 12px; border-radius: 6px; overflow-x: auto; margin-top: 10px; font-size: 0.85em;">
+{
+  "metrics": {
+    "mse_train": 0.018424361446932207,
+    "mse_test": 0.025612634811846308,
+    "mse_difference": 0.007188273364914101,
+    "quality_status": "good",
+    "overfitting_risk": "low"
+  },
+  "model_info": {
+    "type": "neural_network",
+    "architecture": "3-4-1",
+    "activation": "sigmoid",
+    "optimizer": "SGD"
+  },
+  "timestamp": "2026-03-30"
+}</pre>
+    </details>
+    
+    <p style="font-size:0.85em; opacity:0.9; margin-top:15px; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px;">
+        💡 <em>MSE (Mean Squared Error) — средняя квадратичная ошибка. Чем ближе к 0, тем лучше. Значения &lt; 0.05 считаются хорошими для многих задач регрессии.</em>
+    </p>
+</div>

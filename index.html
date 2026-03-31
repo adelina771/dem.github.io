@@ -3,222 +3,517 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой блог</title>
+    <title>Мой блог • Адель</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Стили для красивого отображения предсказаний */
-        .prediction-box {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-family: monospace;
+        /* ═══════════════════════════════════════════════════════════════
+           ГЛОБАЛЬНЫЕ СТИЛИ И ПЕРЕМЕННЫЕ
+           ═══════════════════════════════════════════════════════════════ */
+        :root {
+            --color-primary: #667eea;
+            --color-primary-dark: #5568d3;
+            --color-secondary: #764ba2;
+            --color-success: #11998e;
+            --color-success-light: #38ef7d;
+            --color-warning: #f6d365;
+            --color-warning-dark: #fda085;
+            --color-purple: #a18cd1;
+            --color-pink: #fbc2eb;
+            --color-bg-light: #f9f9f9;
+            --color-border: #e0e0e0;
+            --color-text: #333333;
+            --color-text-muted: #666666;
+            --color-white: #ffffff;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
         }
-        .prediction-box strong {
-            color: #333;
-        }
-        /* Стили для FAQ-блока */
-        .faq-box {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-left: 4px solid #4CAF50;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-family: sans-serif;
-        }
-        .faq-box .meta {
-            color: #666;
-            font-size: 0.9em;
-            font-style: italic;
-            margin: 5px 0;
-        }
-        .faq-date-inline {
-            display: block;
-            margin: -15px -15px 10px -15px;
-            padding: 10px 15px;
-            background: #e8f5e9;
-            border-radius: 8px 8px 0 0;
-            font-size: 0.95em;
-        }
-        /* Стили для блока с результатами модели */
-        .ml-result-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 12px;
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--color-text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
             padding: 20px;
-            margin: 25px 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: 100vh;
         }
-        .ml-result-box h4 {
-            margin: 0 0 10px 0;
-            font-size: 1.1em;
-            border-bottom: 2px solid rgba(255,255,255,0.3);
-            padding-bottom: 8px;
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: 30px 40px;
+            box-shadow: var(--shadow-lg);
         }
-        .accuracy-badge {
-            display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1.2em;
-            margin: 10px 0;
+
+        /* ═══════════════════════════════════════════════════════════════
+           ТИПОГРАФИКА
+           ═══════════════════════════════════════════════════════════════ */
+        h1.main-title {
+            font-size: 1.8em;
+            color: var(--color-primary-dark);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--color-primary);
+            font-weight: 700;
         }
-        .accuracy-badge.warning {
-            background: #FF9800;
-        }
-        /* Стили для таблицы данных */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 0.9em;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .data-table th {
-            background: #667eea;
-            color: white;
-            padding: 12px 8px;
-            text-align: left;
+
+        h3 {
+            font-size: 1.3em;
+            color: var(--color-secondary);
+            margin: 20px 0 12px;
             font-weight: 600;
         }
+
+        h4 {
+            font-size: 1.2em;
+            margin: 0 0 12px 0;
+            font-weight: 600;
+            color: var(--color-white);
+        }
+
+        h5 {
+            font-size: 1.05em;
+            margin: 18px 0 10px;
+            color: var(--color-white);
+            opacity: 0.95;
+        }
+
+        p { margin: 10px 0; color: var(--color-text); }
+        p.date {
+            color: var(--color-text-muted);
+            font-size: 0.95em;
+            font-weight: 500;
+            margin: 25px 0 8px;
+            padding-left: 8px;
+            border-left: 3px solid var(--color-primary);
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        a:hover { color: var(--color-primary-dark); text-decoration: underline; }
+
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.95em;
+            margin: 10px 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ЦИТАТЫ
+           ═══════════════════════════════════════════════════════════════ */
+        .quote-box {
+            background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-pink) 100%);
+            color: var(--color-white);
+            padding: 20px 25px;
+            border-radius: var(--radius-md);
+            margin: 25px 0;
+            border-left: 5px solid rgba(255,255,255,0.4);
+            font-style: italic;
+            box-shadow: var(--shadow-md);
+        }
+        .quote-box .date {
+            color: rgba(255,255,255,0.85);
+            border-left: none;
+            padding-left: 0;
+            margin: 0 0 8px 0;
+            font-size: 0.9em;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           БЛОК ПРЕДСКАЗАНИЙ
+           ═══════════════════════════════════════════════════════════════ */
+        .prediction-box {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-primary);
+            padding: 18px 22px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .prediction-box strong {
+            color: var(--color-primary-dark);
+            font-size: 1.05em;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FAQ БЛОК
+           ═══════════════════════════════════════════════════════════════ */
+        .faq-box {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-success);
+            padding: 18px 22px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+        }
+        .faq-box .meta {
+            color: var(--color-text-muted);
+            font-size: 0.9em;
+            font-style: italic;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(17, 153, 142, 0.1);
+            border-radius: var(--radius-sm);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ML РЕЗУЛЬТАТЫ — БАЗОВЫЙ СТИЛЬ
+           ═══════════════════════════════════════════════════════════════ */
+        .ml-result-box {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: 24px 28px;
+            margin: 28px 0;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        .ml-result-box:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        
+        .ml-result-box h4 {
+            margin: 0 0 14px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .ml-result-box p { opacity: 0.95; margin: 10px 0; }
+        .ml-result-box strong { color: var(--color-white); }
+
+        /* Варианты градиентов */
+        .ml-result-box.green {
+            background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%);
+        }
+        .ml-result-box.purple {
+            background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-pink) 100%);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           BADGES И МЕТКИ
+           ═══════════════════════════════════════════════════════════════ */
+        .accuracy-badge {
+            display: inline-block;
+            background: var(--color-success);
+            color: var(--color-white);
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.25em;
+            margin: 12px 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        .accuracy-badge.warning {
+            background: linear-gradient(135deg, #ff9a56, #ff6b6b);
+        }
+        .accuracy-badge.excellent {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ТАБЛИЦЫ
+           ═══════════════════════════════════════════════════════════════ */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 15px 0;
+            font-size: 0.92em;
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .data-table th {
+            background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+            color: var(--color-white);
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+        }
         .data-table td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #eee;
-            color: #333;
+            padding: 12px 12px;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text);
         }
-        .data-table tr:nth-child(even) {
-            background: #f8f9fa;
+        .data-table tbody tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:nth-child(even) { background: #fafbfc; }
+        .data-table tbody tr:hover { 
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08)); 
+            transform: scale(1.01);
+            transition: var(--transition);
         }
-        .data-table tr:hover {
-            background: #e3f2fd;
-        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           GRID И FLEX КОМПОНЕНТЫ
+           ═══════════════════════════════════════════════════════════════ */
         .class-dist {
             display: flex;
-            gap: 15px;
-            margin: 10px 0;
+            gap: 12px;
+            margin: 12px 0;
             flex-wrap: wrap;
         }
         .class-item {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-size: 0.95em;
+            background: rgba(255,255,255,0.18);
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.98em;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.25);
         }
+
         .report-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 10px 0;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
         }
         .report-item {
             background: rgba(255,255,255,0.15);
-            padding: 10px;
-            border-radius: 6px;
+            padding: 14px 10px;
+            border-radius: var(--radius-sm);
             text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: var(--transition);
         }
+        .report-item:hover { background: rgba(255,255,255,0.25); }
         .report-item .label {
             font-size: 0.85em;
             opacity: 0.9;
             display: block;
+            margin-bottom: 4px;
         }
         .report-item .value {
-            font-weight: bold;
-            font-size: 1.1em;
+            font-weight: 700;
+            font-size: 1.3em;
+            color: var(--color-white);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 18px 0;
+        }
+        .metric-card {
+            background: rgba(255,255,255,0.18);
+            padding: 18px 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: var(--transition);
+        }
+        .metric-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .metric-card .label {
+            font-size: 0.95em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .metric-card .value {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5em;
+            font-weight: 700;
+            background: rgba(0,0,0,0.15);
+            padding: 10px 15px;
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            min-width: 100px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ
+           ═══════════════════════════════════════════════════════════════ */
+        .info-note {
+            background: rgba(255,255,255,0.15);
+            padding: 15px 20px;
+            border-radius: var(--radius-sm);
+            margin: 18px 0;
+            font-size: 0.95em;
+            border-left: 4px solid rgba(255,255,255,0.5);
+        }
+        .info-note ul {
+            margin: 10px 0 0 22px;
+            line-height: 1.8;
+        }
+        .info-note li { margin: 4px 0; }
+
+        details {
+            margin-top: 20px;
+            font-size: 0.95em;
+        }
+        details summary {
+            cursor: pointer;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.12);
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        details summary:hover { background: rgba(0,0,0,0.18); }
+        details pre {
+            background: rgba(0,0,0,0.25);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            margin-top: 12px;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .analogy-box {
+            background: rgba(255,255,255,0.2);
+            padding: 18px 22px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .analogy-box p { margin: 8px 0; }
+
+        .footer-note {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            font-style: italic;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           АДАПТИВНОСТЬ
+           ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .container { padding: 20px 25px; }
+            h1.main-title { font-size: 1.5em; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .report-grid { grid-template-columns: repeat(2, 1fr); }
+            .data-table { font-size: 0.85em; }
+            .data-table th, .data-table td { padding: 10px 8px; }
+        }
+
+        /* Анимация появления */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ml-result-box, .prediction-box, .faq-box {
+            animation: fadeInUp 0.5s ease forwards;
         }
     </style>
 </head>
 <body>
     <div class="container">
         
+        <!-- Цитата -->
         <blockquote class="quote-box">
-            Путешествие в тысячу миль начинается с одного шага (Лао Цзы)
+            <p class="date">21 декабря 2025</p>
+            Путешествие в тысячу миль начинается с одного шага — <strong>Лао Цзы</strong>
         </blockquote>
 
-        <!-- Запись от 19 января 2026 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- Запись: 19 января 2026 — Шифр Цезаря -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
         <p class="date">19 января 2026</p>
-        <h1 class="main-title">Решение задач по шифру Цезаря</h1>
+        <h1 class="main-title">🔐 Решение задач по шифру Цезаря</h1>
         
-        <h3>1. Определение ключей шифра Цезаря</h3>
-        <p><strong>а. АПЕЛЬСИН → САЦЬНВЩЮ</strong></p>
-        <pre>Ключ: k = 18</pre>
+        <h3>1. Определение ключей шифра</h3>
+        
+        <p><strong>а) АПЕЛЬСИН → САЦЬНВЩЮ</strong></p>
+        <pre>✅ Ключ: k = 18</pre>
 
-        <p><strong>б. АБРИКОС → ЫЬЛГЕЙМ</strong></p>
-        <pre>Ключ: k = 28</pre>
+        <p><strong>б) АБРИКОС → ЫЬЛГЕЙМ</strong></p>
+        <pre>✅ Ключ: k = 28</pre>
         
-        <h3>3. Шифрование фамилии с ключом k = 10</h3>
-        <p><strong>Фамилия: ОЗЕРСКАЯ</strong></p>
-        <pre>Зашифрованная фамилия: ШСПЪЫФКЙ</pre>
+        <h3>3. Шифрование фамилии (k = 10)</h3>
+        <p><strong>Фамилия:</strong> ОЗЕРСКАЯ</p>
+        <pre>🔒 Результат: ШСПЪЫФКЙ</pre>
 
-        <!-- Запись от 20 декабря 2025 -->
-        <p class="date">20 декабря 2025</p>   
-        <p style="color: #999;">пропуск-3 раза</p>
-        
-        <!-- Запись от 7 декабря 2025 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- Запись: 7 декабря 2025 — Поздравление -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
         <p class="date">7 декабря 2025</p>
-        <h1 class="main-title">Поздравляю с наступающим Рождеством 2026 🎄</h1>
-        <h3 class="subsection-title">Новый год</h3>
-        <p><a href="https://content-studio.sberdevices.ru/media/019b16f5-d46d-7443-b8e4-276feb3439fc/019b464a-ebe9-76c6-8f14-700a4d0852e8.mp4#t=0.001" target="_blank">новогоднее поздравление</a></p>
+        <h1 class="main-title">🎄 Поздравляю с наступающим Рождеством 2026!</h1>
+        <h3>✨ Новогоднее настроение</h3>
+        <p>🎁 <a href="https://content-studio.sberdevices.ru/media/019b16f5-d46d-7443-b8e4-276feb3439fc/019b464a-ebe9-76c6-8f14-700a4d0852e8.mp4#t=0.001" target="_blank">Смотреть новогоднее поздравление →</a></p>
 
-        <!-- Запись от 19 декабря 2025 -->
-        <p class="date">19 декабря, 2025</p>
-        <p>Я сделала Новогодние кроссворды и поздравление для сайта <a href="https://justmargarret.github.io/just-yourmargarret2/">Поздравление и кроссворды</a></p>
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- Запись: 19 декабря 2025 — Кроссворды -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <p class="date">19 декабря 2025</p>
+        <p>🎨 Создала Новогодние кроссворды и поздравление для сайта:<br>
+           <a href="https://justmargarret.github.io/just-yourmargarret2/" target="_blank">🎅 Поздравление и кроссворды</a></p>
         
-        <blockquote class="quote-box">
-            <p class="date">21 декабря, 2025</p>
-            Путешествие в тысячу миль начинается с одного шага (Лао Цзы)
-        </blockquote>
+        <p style="margin-top:20px; color:var(--color-text-muted);">
+            🌐 Оставляю в прошлом локальную файловую систему ради возможностей Всемирной паутины.
+        </p>
 
-        <p>Оставляю в прошлом скучную неинтересную локальную файловую систему ради Всемирной паутины.</p>
-        <p><a href="#">Рождественская елка иконки от IconMarketPK - Flaticon</a></p>
-
-        <!-- Запись от 14 января 2026 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- Запись: 14 января 2026 — Контакты -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
         <p class="date">14 января 2026</p>
-        <p>Домен: adelina771.github.io</p>
-        <p><a href="mailto:garizanadelina@gmail.com">Напишите мне</a></p>
+        <p><strong>🌐 Домен:</strong> <code>adelina771.github.io</code></p>
+        <p>📧 <a href="mailto:garizanadelina@gmail.com">✉️ Напишите мне</a></p>
 
-        <!-- Запись от 20 декабря 2025 (пропуск) -->
-        <p class="date">20 декабря 2025</p>   
-        <p style="color: #999;">пропуск-3 раза</p>
-
-        <!-- Запись от 14 февраля 2026 -->
-        <p class="date">14 февраля 2026</p>   
-
-        <!-- БЛОК ПРЕДСКАЗАНИЙ -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Предсказания модели -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <p class="date">14 февраля 2026</p>
         <div class="prediction-box">
-            <strong>🔮 Топ-3 предсказаний:</strong><br>
-            👟 running shoe: 99.45%<br>
-            🏪 shoe store: 0.27%<br>
-            👞 clogs: 0.15%
+            <strong>🔮 Топ-3 предсказаний модели:</strong><br><br>
+            👟 <code>running shoe</code>: <strong>99.45%</strong><br>
+            🏪 <code>shoe store</code>: <strong>0.27%</strong><br>
+            👞 <code>clogs</code>: <strong>0.15%</strong>
         </div>
 
-        <!-- БЛОК ОТВЕТА НА ВОПРОС -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Ответ на вопрос (FAQ) -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
         <div class="faq-box">
             <p class="date">21 февраля 2026</p>
             <p><strong>❓ Вопрос пользователя:</strong> Сколько ждать мой заказ?</p>
-            <p class="meta">Найден FAQ-вопрос: «Как быстро доставляется заказ?» (sim=0.706)</p>
-            <p><strong>✅ Ответ бот-FAQ:</strong> Наш стандартный срок доставки — 3–5 рабочих дней.</p>
+            <p class="meta">🔍 Найден FAQ-вопрос: «Как быстро доставляется заказ?» (similarity = 0.706)</p>
+            <p><strong>✅ Ответ бота:</strong> Наш стандартный срок доставки — <strong>3–5 рабочих дней</strong> с момента подтверждения заказа.</p>
         </div>
 
-        <!-- 🔹 НОВЫЙ БЛОК: Результаты машинного обучения -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Кредитный скоринг -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
         <p class="date">23 марта 2026</p>
         
         <div class="ml-result-box">
             <h4>🎯 Модель кредитного скоринга</h4>
-            <p>Показатель точности модели по выдаче кредита:</p>
+            <p>Показатель точности (Accuracy) модели:</p>
             <span class="accuracy-badge warning">0.69 (69%)</span>
-            <p style="font-size:0.9em; opacity:0.9; margin-top:5px;">
-                <em>Модель требует доработки: попробуйте добавить больше признаков или изменить параметры дерева</em>
+            <p class="info-note">
+                ⚠️ <em>Модель требует доработки: попробуйте добавить больше признаков, 
+                изменить параметры дерева или использовать ансамбль моделей.</em>
             </p>
         </div>
 
-        <div class="ml-result-box" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Страхование КАСКО -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="ml-result-box green">
             <h4>🚗 Модель страхования КАСКО</h4>
             
             <p><strong>📊 Первые строки датасета:</strong></p>
@@ -251,10 +546,10 @@
                 <div class="class-item">✅ Одобрено: <strong>391</strong></div>
             </div>
 
-            <p><strong>🎯 Точность модели на тесте:</strong></p>
-            <span class="accuracy-badge">1.0000 (100%)</span>
+            <p><strong>🎯 Точность на тестовой выборке:</strong></p>
+            <span class="accuracy-badge excellent">1.0000 (100%)</span>
 
-            <p><strong>📋 Отчет о классификации (тестовая выборка):</strong></p>
+            <p><strong>📋 Метрики классификации:</strong></p>
             <div class="report-grid">
                 <div class="report-item">
                     <span class="label">Precision</span>
@@ -274,56 +569,48 @@
                 </div>
             </div>
             
-            <p style="font-size:0.85em; opacity:0.85; margin-top:15px; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px;">
-                💡 <em>Высокая точность объясняется тем, что данные сгенерированы по четким правилам, которые дерево решений идеально воспроизводит.</em>
+            <p class="footer-note">
+                💡 <em>Высокая точность объясняется тем, что данные сгенерированы по детерминированным 
+                правилам, которые дерево решений воспроизводит идеально.</em>
             </p>
         </div>
 
-    </div>
-</body>
-</html><!-- 🔹 БЛОК: Метрики ошибки нейронной сети -->
-<p class="date">30 марта 2026</p>
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Метрики ошибки нейросети (MSE) -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <p class="date">30 марта 2026</p>
 
-<div class="ml-result-box" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
-    <h4>📉 Метрики ошибки модели (MSE)</h4>
-    
-    <p><strong>Значения среднеквадратичной ошибки:</strong></p>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
-        <!-- Блок: Ошибка на обучении -->
-        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 0.9em; opacity: 0.95; margin-bottom: 8px;">🎓 Обучение (Train)</div>
-            <div style="font-family: monospace; font-size: 1.3em; font-weight: bold; background: rgba(0,0,0,0.15); padding: 8px; border-radius: 4px;">
-                0.0184
+        <div class="ml-result-box purple">
+            <h4>📉 Метрики ошибки модели (MSE)</h4>
+            
+            <p><strong>Среднеквадратичная ошибка:</strong></p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="label">🎓 Обучение (Train)</span>
+                    <span class="value">0.0184</span>
+                    <div style="font-size:0.8em; opacity:0.9; margin-top:6px;">MSE = 0.01842436...</div>
+                </div>
+                
+                <div class="metric-card">
+                    <span class="label">🧪 Тест (Test)</span>
+                    <span class="value">0.0256</span>
+                    <div style="font-size:0.8em; opacity:0.9; margin-top:6px;">MSE = 0.02561263...</div>
+                </div>
             </div>
-            <div style="font-size: 0.85em; opacity: 0.9; margin-top: 5px;">MSE = 0.01842436...</div>
-        </div>
-        
-        <!-- Блок: Ошибка на тесте -->
-        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 0.9em; opacity: 0.95; margin-bottom: 8px;">🧪 Тест (Test)</div>
-            <div style="font-family: monospace; font-size: 1.3em; font-weight: bold; background: rgba(0,0,0,0.15); padding: 8px; border-radius: 4px;">
-                0.0256
+
+            <div class="info-note">
+                <strong>📊 Анализ качества:</strong>
+                <ul>
+                    <li>✅ Разница Train/Test: <strong>0.0072</strong> — модель не переобучена</li>
+                    <li>✅ Ошибка теста &lt; 0.03 — приемлемое качество для регрессии</li>
+                    <li>💡 Можно улучшить: добавить данных или настроить гиперпараметры</li>
+                </ul>
             </div>
-            <div style="font-size: 0.85em; opacity: 0.9; margin-top: 5px;">MSE = 0.02561263...</div>
-        </div>
-    </div>
 
-    <!-- Индикатор качества -->
-    <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; margin: 15px 0;">
-        <strong>📊 Анализ качества:</strong>
-        <ul style="margin: 8px 0 0 20px; font-size: 0.95em; line-height: 1.6;">
-            <li>✅ Разница Train/Test: <strong>0.0072</strong> — модель не переобучена</li>
-            <li>✅ Ошибка теста < 0.03 — приемлемое качество для задачи</li>
-            <li>💡 Можно улучшить: добавить данных или настроить гиперпараметры</li>
-        </ul>
-    </div>
-
-    <!-- JSON для разработчиков -->
-    <details style="margin-top: 15px; font-size: 0.9em;">
-        <summary style="cursor: pointer; padding: 8px; background: rgba(0,0,0,0.1); border-radius: 4px;">🔧 JSON для API / скачивания</summary>
-        <pre style="background: rgba(0,0,0,0.25); padding: 12px; border-radius: 6px; overflow-x: auto; margin-top: 10px; font-size: 0.85em;">
-{
+            <details>
+                <summary>🔧 JSON для API / разработчиков</summary>
+                <pre>{
   "metrics": {
     "mse_train": 0.018424361446932207,
     "mse_test": 0.025612634811846308,
@@ -339,69 +626,79 @@
   },
   "timestamp": "2026-03-30"
 }</pre>
-    </details>
-    
-    <p style="font-size:0.85em; opacity:0.9; margin-top:15px; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px;">
-        💡 <em>MSE (Mean Squared Error) — средняя квадратичная ошибка. Чем ближе к 0, тем лучше. Значения &lt; 0.05 считаются хорошими для многих задач регрессии.</em>
-    </p>
-</div>
-<!-- Запись от 30 марта 2026 -->
-<p class="date">30 марта 2026</p>
+            </details>
+            
+            <p class="footer-note">
+                💡 <em>MSE (Mean Squared Error) — средняя квадратичная ошибка. 
+                Чем ближе к 0, тем лучше. Значения &lt; 0.05 считаются хорошими 
+                для многих задач регрессии.</em>
+            </p>
+        </div>
 
-<div class="ml-result-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-    <h4>🧠 Можно ли объяснить логику работы нейросети?</h4>
-    
-    <p><strong>❌ Ответ: Нейросеть неинтерпретируема</strong></p>
-    
-    <p>В отличие от линейной регрессии и дерева решений, нейронная сеть является <strong>"чёрным ящиком"</strong> — её внутреннюю логику работы невозможно так же просто объяснить.</p>
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Интерпретируемость моделей -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="ml-result-box">
+            <h4>🧠 Можно ли объяснить логику нейросети?</h4>
+            
+            <p><strong>❌ Ответ: Нейросеть — «чёрный ящик»</strong></p>
+            
+            <p>В отличие от линейной регрессии и дерева решений, нейронная сеть 
+            не позволяет просто извлечь понятные правила принятия решений.</p>
 
-    <h5>📊 Сравнение моделей:</h5>
-    
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Модель</th>
-                <th>Интерпретируемость</th>
-                <th>Пример объяснения</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Линейная регрессия</strong></td>
-                <td>✅ Прозрачна</td>
-                <td><code>y = w₁x₁ + w₂x₂ + b</code><br>Каждый коэффициент показывает влияние признака</td>
-            </tr>
-            <tr>
-                <td><strong>Дерево решений</strong></td>
-                <td>✅ Прозрачно</td>
-                <td><code>ЕСЛИ возраст > 25 И зарплата > 50000, ТО одобрить</code><br>Можно проследить весь путь решения</td>
-            </tr>
-            <tr>
-                <td><strong>Нейронная сеть</strong></td>
-                <td>❌ Непрозрачна</td>
-                <td>Тысячи взаимосвязанных весов<br>Невозможно выделить отдельное правило</td>
-            </tr>
-        </tbody>
-    </table>
+            <h5>📊 Сравнение моделей:</h5>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Интерпретируемость</th>
+                        <th>Пример объяснения</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Линейная регрессия</strong></td>
+                        <td>✅ Прозрачна</td>
+                        <td><code>y = w₁x₁ + w₂x₂ + b</code><br><small>Коэффициенты показывают влияние признаков</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Дерево решений</strong></td>
+                        <td>✅ Прозрачно</td>
+                        <td><code>ЕСЛИ возраст &gt; 25 И доход &gt; 50K, ТО одобрить</code><br><small>Можно проследить путь решения</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Нейронная сеть</strong></td>
+                        <td>❌ Непрозрачна</td>
+                        <td><small>Тысячи взаимосвязанных весов<br>Нет изолированных правил</small></td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <h5>🔍 Почему нейросеть неинтерпретируема?</h5>
-    <ul>
-        <li><strong>Тысячи/миллионы весов</strong> — каждый нейрон связан с множеством других</li>
-        <li><strong>Нелинейные функции активации</strong> — усложняют понимание зависимостей</li>
-        <li><strong>Распределённое представление</strong> — нельзя сказать "этот нейрон отвечает за возраст"</li>
-        <li><strong>Сложные комбинации</strong> — решение это результат взаимодействия всех слоёв</li>
-    </ul>
+            <h5>🔍 Почему нейросеть неинтерпретируема?</h5>
+            <ul style="margin-left:20px; line-height:1.8;">
+                <li><strong>Миллионы весов</strong> — каждый нейрон связан с множеством других</li>
+                <li><strong>Нелинейные активации</strong> — усложняют понимание зависимостей</li>
+                <li><strong>Распределённое представление</strong> — нельзя выделить «нейрон возраста»</li>
+                <li><strong>Эмерджентность</strong> — решение возникает из взаимодействия всех слоёв</li>
+            </ul>
 
-    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
-        <p><strong>💡 Аналогия:</strong></p>
-        <p>📖 <strong>Дерево решений</strong> — как рецепт в поваренной книге (чёткие шаги)</p>
-        <p>🧠 <strong>Нейросеть</strong> — как интуиция шеф-повара (понимаем результат, но не можем объяснить процесс)</p>
+            <div class="analogy-box">
+                <p><strong>💡 Простая аналогия:</strong></p>
+                <p>📖 <strong>Дерево решений</strong> — как рецепт в поваренной книге (чёткие шаги)</p>
+                <p>🧠 <strong>Нейросеть</strong> — как интуиция шеф-повара (видим результат, но не процесс)</p>
+            </div>
+
+            <h5>📈 Итоговый вывод:</h5>
+            <p>Мы видим <strong>вход</strong> и <strong>выход</strong>, но не можем точно объяснить, 
+            <strong>как именно</strong> сеть пришла к решению. Это фундаментальный компромисс: 
+            <em>высокая точность ценой потери интерпретируемости</em>.</p>
+
+            <p class="footer-note">
+                ⚠️ <em>В задачах с высокими рисками (кредиты, медицина, юриспруденция) 
+                это ограничение может быть критичным и требует дополнительных методов объяснения (XAI).</em>
+            </p>
+        </div>
+
     </div>
-
-    <h5>📈 Вывод:</h5>
-    <p>Мы видим <strong>входные данные</strong> и <strong>результат</strong>, но не можем точно объяснить, <strong>как именно</strong> сеть пришла к этому решению. Это главная проблема нейросетей — <em>высокая точность ценой потери интерпретируемости</em>.</p>
-
-    <p style="font-size:0.9em; opacity:0.95; margin-top:15px; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px;">
-        ⚠️ <em>В задачах, где важно понимать причины решений (кредиты, медицина), это может быть критичным ограничением.</em>
-    </p>
-</div>
+</body>
+</html>

@@ -264,6 +264,65 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
+           МЕДИЦИНСКАЯ КАРТА — НОВЫЕ СТИЛИ
+           ═══════════════════════════════════════════════════════════════ */
+        .medical-record-box {
+            background: var(--color-white);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            margin: 25px 0;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .medical-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr 2fr;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: var(--color-white);
+            padding: 0;
+        }
+        
+        .medical-header-cell {
+            padding: 16px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .medical-header-cell:last-child {
+            border-right: none;
+        }
+        
+        .medical-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        
+        .medical-table th {
+            background: #f8f9fa;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-text);
+            border-bottom: 2px solid var(--color-primary);
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        
+        .medical-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+        
+        .medical-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
            GRID И FLEX КОМПОНЕНТЫ
            ═══════════════════════════════════════════════════════════════ */
         .class-dist {
@@ -409,6 +468,13 @@
             .report-grid { grid-template-columns: repeat(2, 1fr); }
             .data-table { font-size: 0.85em; }
             .data-table th, .data-table td { padding: 10px 8px; }
+            .medical-header {
+                grid-template-columns: 1fr;
+            }
+            .medical-header-cell {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.3);
+            }
         }
 
         /* Анимация появления */
@@ -416,7 +482,7 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .ml-result-box, .prediction-box, .faq-box {
+        .ml-result-box, .prediction-box, .faq-box, .medical-record-box {
             animation: fadeInUp 0.5s ease forwards;
         }
     </style>
@@ -473,6 +539,41 @@
         <p class="date">14 января 2026</p>
         <p><strong>🌐 Домен:</strong> <code>adelina771.github.io</code></p>
         <p>📧 <a href="mailto:garizanadelina@gmail.com">✉️ Напишите мне</a></p>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Медицинская карта пациента -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <p class="date">8 апреля 2026</p>
+        <h1 class="main-title">🏥 Медицинская карта пациента</h1>
+        
+        <div class="medical-record-box">
+            <div class="medical-header">
+                <div class="medical-header-cell">01</div>
+                <div class="medical-header-cell">Нарек</div>
+                <div class="medical-header-cell">г.Москва</div>
+            </div>
+            
+            <table class="medical-table">
+                <thead>
+                    <tr>
+                        <th>дата операции</th>
+                        <th>хирург</th>
+                        <th>патент хирурга</th>
+                        <th>препарат</th>
+                        <th>побочный эффект</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>11.04.25</td>
+                        <td>А.В.Джобатшоева</td>
+                        <td>113446</td>
+                        <td>пеницилин</td>
+                        <td>тошнота</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <!-- ═══════════════════════════════════════════════════════════ -->
         <!-- БЛОК: Предсказания модели -->

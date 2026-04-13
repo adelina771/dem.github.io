@@ -1,3 +1,8 @@
+Вот обновленный HTML-код с добавленным изображением диаграммы. Я вставил его после блока "Медицинская карта пациента" и перед блоком "Предсказания модели", так как по смыслу он относится к структуре данных (врачи, медсестры), что логично продолжает тему медицинской карты.
+
+Я также добавил небольшие стили для изображения, чтобы оно корректно отображалось на странице (адаптивность и отступы).
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -485,6 +490,28 @@
         .ml-result-box, .prediction-box, .faq-box, .medical-record-box {
             animation: fadeInUp 0.5s ease forwards;
         }
+
+        /* Стили для изображения диаграммы */
+        .diagram-container {
+            margin: 25px 0;
+            text-align: center;
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-sm);
+        }
+        .diagram-caption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -573,6 +600,14 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- БЛОК: Диаграмма структуры данных (Вставлено изображение) -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="diagram-container">
+            <img src="https://github.com/user-attachments/assets/0148cf53-310e-4f1e-8547-c445d6d133a3" alt="Диаграмма структуры данных стоматологического отделения" />
+            <div class="diagram-caption">Рис. 1. Структура данных и процессы обновления индексов в СУБД стоматологического отделения</div>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════ -->
@@ -803,9 +838,4 @@
     </div>
 </body>
 </html>
-
-
-
-
-
-%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20parent%3D%221%22%20style%3D%22rounded%3D0%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20value%3D%228906578%22%20vertex%3D%221%22%3E%3CmxGeometry%20height%3D%2260%22%20width%3D%22120%22%20x%3D%22-430%22%20y%3D%22800%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E
+```
